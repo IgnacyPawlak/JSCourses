@@ -9,35 +9,41 @@ export class LoginMenu extends Component {
         super(props);
 
         this.state = {
-            isAuthenticated: false,
-            userName: null
+            //TODO uncomment & delete hardcode:
+            // isAuthenticated: false,
+            // userName: null
+            isAuthenticated: true,
+            userName: 'Basia'
         };
     }
 
-    componentDidMount() {
-        this._subscription = authService.subscribe(() => this.populateState());
-        this.populateState();
-    }
+    //TODO ucomment hardcode:
+    // componentDidMount() {
+    //     this._subscription = authService.subscribe(() => this.populateState());
+    //     this.populateState();
+    // }
 
-    componentWillUnmount() {
-        authService.unsubscribe(this._subscription);
-    }
+    // componentWillUnmount() {
+    //     authService.unsubscribe(this._subscription);
+    // }
+    
+    // async populateState() {
+    //     const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
+    //     this.setState({
+    //         isAuthenticated,
+    //         userName: user && user.name
+    //     });
+    // }
 
-    async populateState() {
-        const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
-        this.setState({
-            isAuthenticated,
-            userName: user && user.name
-        });
-    }
-
-    render() {
+    render() {    
         const { isAuthenticated, userName } = this.state;
+
         if (!isAuthenticated) {
             const registerPath = `${ApplicationPaths.Register}`;
             const loginPath = `${ApplicationPaths.Login}`;
             return this.anonymousView(registerPath, loginPath);
         } else {
+            //TODO zmienić, żeby kliknięcie w Hello, user! nie powodowało wylogowania tylko przejście do szczegółów użytkownika
             const profilePath = `${ApplicationPaths.Profile}`;
             const logoutPath = { pathname: `${ApplicationPaths.LogOut}`, state: { local: true } };
             return this.authenticatedView(userName, profilePath, logoutPath);
@@ -47,9 +53,9 @@ export class LoginMenu extends Component {
     authenticatedView(userName, profilePath, logoutPath) {
         return (<Fragment>
             <NavItem>
-                <NavLink tag={Link} className="text-dark" to={profilePath}>Hello {userName}</NavLink>
+                <NavLink tag={Link} className="text-dark border-left" to={profilePath}>Hello, {userName}!</NavLink>
             </NavItem>
-            <NavItem>
+            <NavItem class="text-secondary">
                 <NavLink tag={Link} className="text-dark" to={logoutPath}>Logout</NavLink>
             </NavItem>
         </Fragment>);
@@ -59,7 +65,7 @@ export class LoginMenu extends Component {
     anonymousView(registerPath, loginPath) {
         return (<Fragment>
             <NavItem>
-                <NavLink tag={Link} className="text-dark" to={registerPath}>Register</NavLink>
+                <NavLink tag={Link} className="text-dark border-left" to={registerPath}>| Register</NavLink>
             </NavItem>
             <NavItem>
                 <NavLink tag={Link} className="text-dark" to={loginPath}>Login</NavLink>

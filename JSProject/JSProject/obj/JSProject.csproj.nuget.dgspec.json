@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\studia\\javascript\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj": {}
+    "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj": {}
   },
   "projects": {
-    "D:\\studia\\javascript\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj": {
+    "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\studia\\javascript\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj",
+        "projectUniqueName": "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj",
         "projectName": "JSProject",
-        "projectPath": "D:\\studia\\javascript\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj",
-        "packagesPath": "C:\\Users\\ziom5\\.nuget\\packages\\",
-        "outputPath": "D:\\studia\\javascript\\projekt\\JSCourses\\JSProject\\JSProject\\obj\\",
+        "projectPath": "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj",
+        "packagesPath": "C:\\Users\\dagma\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ziom5\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dagma\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,8 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.emzi0767.com/api/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {

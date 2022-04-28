@@ -31,15 +31,22 @@ export class NavMenu extends Component {
             <NavbarBrand tag={Link} to="/">Studdier</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-              <ul className="navbar-nav flex-grow">
+              <ul className="navbar-nav flex-grow">       
+               <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/user-courses">
+                    My Courses
+                    </NavLink>
+                </NavItem>               
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/calendar">Calendar</NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/calendar">
+                    Calendar
+                  </NavLink>
                 </NavItem>                
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data"></NavLink>
-           
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/payments">
+                    Payments
+                  </NavLink>
+                </NavItem>               
                 <LoginMenu>
                 </LoginMenu>
               </ul>

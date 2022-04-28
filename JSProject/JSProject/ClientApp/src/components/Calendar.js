@@ -4,18 +4,10 @@ export class Calendar extends Component {
   static displayName = Calendar.name;
 
   constructor(props) {
-    super(props);
-    this.state = { currentCount: 0 };
-    this.incrementCounter = this.incrementCounter.bind(this);
+    super(props);    
   }
-
-  incrementCounter() {
-    this.setState({
-      currentCount: this.state.currentCount + 1
-    });
-  }
-
-  //TODO sprawdzanie zalogowania
+  
+  //TODO delete hardcode
   loggedIn = new Boolean();
   loggedIn = true;
 
