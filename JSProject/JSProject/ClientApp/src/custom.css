@@ -12,3 +12,18 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+
+td {
+  border: 0 !important;
+  color: #494f53 !important;
+}
+
+th {
+  border: 0 !important;
+}
+
+tr {
+  border: 0 !important;
+  border-bottom: 1px solid #dee2e6 !important;
+}

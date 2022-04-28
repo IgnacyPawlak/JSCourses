@@ -1,76 +1,96 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactDOM } from 'react';
+import { Container } from 'reactstrap';
+
+//TODO delete hardcode
+var userCourses = [
+  {
+    courseId: 0,
+    date: '01-02-22', 
+    title: 'Get fit', 
+    description: 'Dieting, excercise and other important things', 
+    teacher: 'Chodakowska',
+     
+  },
+  {
+    courseId: 1,
+    date: '02-02-22', 
+    title: 'Get fit 2', 
+    description: 'Dieting, excercise and other important things', 
+    teacher: 'Chodakowska' 
+  },
+];
 
 export class UserCourses extends Component {
   static displayName = UserCourses.name;
 
   constructor(props) {
-    super(props);
-    this.courses = [
-      ['01-02-22', 'Get fit', 'Dieting, excercise and other important things', 'Chodakowska' ],
-      ['02-02-22', 'Get fit 2', 'Dieting, excercise and other important things', 'Chodakowska' ]
-    ];
+    super(props);    
+    this.state = { 
+      courses: userCourses
+    };
   }
+
+
 //TODO do naprawy Daga
   // renderTableBody() {
   //   let data = [];
   //   for (let i = 0; i < this.courses.length; i++) {
   //     for (let j = 0; j < this.courses[i].length; j++) {
-  //       data.push(<td>{data[i][j]}</td>)
+  //       data.push(<td>{data[i][j]}</td>);
   //     }
   //   }
   //   return data;
   // }
 
-
   render() {
-    // //TODO Daga delete hardcode:
-    // var courses = ['1', '2', '3'];
+//TODO course details on display
 
-    // var tr = null;
-    // var tbody = null;
 
-    // function renderTableBody() {
-    //   // for (let element of courses) {
-    //     tr = document.createElement("tr");
-    //     tr.innerHTML = "<td>01.01.2000</td><td>Get fit</td><td>Dieting, excercise and other important things</td><td>Chodakowska</td>";
-    //   //}
-    //  document.getElementById("table-body").appendChild(tr);
-    // }
+    const CoursesTable = this.state.courses.map((course) => {
+      return (
+        <table className="table table-hover w-100 mt-5 border-0">
+          <thead>
+            <tr key={course.courseId} className="border-bottom">
+              <th colSpan={2} className="w-100 border-0">{course.title}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className='w-100 border-top-0  text-secondary'>
+              <td className='col-4'>
+                Course date: {course.date} <br />
+                Teacher: {course.teacher} <br />
+              </td>
+              <td className='col-6'>
+                {course.description}
+              </td>
+              <td className='col d-flex justify-content-end'>
+                  {/* TODO link do szczegółów kursu - inne szczegóły dla studenta, nauczyciela i admina*/}
+                <div className='btn btn-success'>See details</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )
+    })
 
+    let Tables;
+    if(this.state.courses.length > 0) {
+      Tables  =  
+      <table className='w-100'>
+        { CoursesTable }       
+      </table>
+    }
+   
     return (    
       <div>
         <div className="d-flex justify-content-between mb-3">
-          <h1>Your courses:</h1>  
-          <Link className="btn btn-primary m-2" to="/all-courses">See all our courses</Link>
-                    
+          <h1>My courses:</h1>  
+          <Link className="btn btn-primary m-2" to="/all-courses">See all our courses</Link>                    
         </div>
-        <table class="table table-hover">
-          <thead>
-          
-            <tr>
-              <th scope="col">Date time</th>
-              <th scope="col">Course</th>
-              <th scope="col">Description</th>
-              <th scope="col">Teacher</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">     
-          {/* TODO Daga */}
-          {/* {
-           this.renderTableBody()
-          }
-             */}
-           <tr>
-             <td>{this.courses[0][0]}</td>
-             <td>{this.courses[0][1]}</td>
-             <td>{this.courses[0][2]}</td>
-             <td>{this.courses[0][3]}</td>
-           </tr>
-            
-          </tbody>
-        </table>
+      
+      { Tables }
 
       </div>
     

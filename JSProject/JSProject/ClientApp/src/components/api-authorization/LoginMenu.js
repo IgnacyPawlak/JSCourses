@@ -16,24 +16,23 @@ export class LoginMenu extends Component {
             userName: 'Basia'
         };
     }
+   
+    componentDidMount() {
+        this._subscription = authService.subscribe(() => this.populateState());
+        this.populateState();
+    }
 
-    //TODO ucomment hardcode:
-    // componentDidMount() {
-    //     this._subscription = authService.subscribe(() => this.populateState());
-    //     this.populateState();
-    // }
-
-    // componentWillUnmount() {
-    //     authService.unsubscribe(this._subscription);
-    // }
+    componentWillUnmount() {
+        authService.unsubscribe(this._subscription);
+    }
     
-    // async populateState() {
-    //     const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
-    //     this.setState({
-    //         isAuthenticated,
-    //         userName: user && user.name
-    //     });
-    // }
+    async populateState() {
+        const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
+        this.setState({
+            isAuthenticated,
+            userName: user && user.name
+        });
+    }
 
     render() {    
         const { isAuthenticated, userName } = this.state;
@@ -43,7 +42,6 @@ export class LoginMenu extends Component {
             const loginPath = `${ApplicationPaths.Login}`;
             return this.anonymousView(registerPath, loginPath);
         } else {
-            //TODO zmienić, żeby kliknięcie w Hello, user! nie powodowało wylogowania tylko przejście do szczegółów użytkownika
             const profilePath = `${ApplicationPaths.Profile}`;
             const logoutPath = { pathname: `${ApplicationPaths.LogOut}`, state: { local: true } };
             return this.authenticatedView(userName, profilePath, logoutPath);
@@ -53,7 +51,7 @@ export class LoginMenu extends Component {
     authenticatedView(userName, profilePath, logoutPath) {
         return (<Fragment>
             <NavItem>
-                <NavLink tag={Link} className="text-dark border-left" to={profilePath}>Hello, {userName}!</NavLink>
+                <NavLink tag={Link} className="text-dark" to={profilePath}>Hello, {userName}!</NavLink>
             </NavItem>
             <NavItem class="text-secondary">
                 <NavLink tag={Link} className="text-dark" to={logoutPath}>Logout</NavLink>
@@ -65,7 +63,7 @@ export class LoginMenu extends Component {
     anonymousView(registerPath, loginPath) {
         return (<Fragment>
             <NavItem>
-                <NavLink tag={Link} className="text-dark border-left" to={registerPath}>| Register</NavLink>
+                <NavLink tag={Link} className="text-dark border-left" to={registerPath}>Register</NavLink>
             </NavItem>
             <NavItem>
                 <NavLink tag={Link} className="text-dark" to={loginPath}>Login</NavLink>
