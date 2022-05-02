@@ -75,6 +75,7 @@ export class UserCourses extends Component {
         <table className="table table-hover w-100 mt-5 border-0">
           <thead>
             <tr key={course.courseId} className="border-bottom">
+                {/*TODO?: pokazywanie/chowanie detali kursu na kliknięcie th course.title */}
               <th colSpan={2} className="w-100 border-0">{course.title}</th>
             </tr>
           </thead>
@@ -88,14 +89,7 @@ export class UserCourses extends Component {
                 {course.description}
                
               </td>
-              {/* <td className='col d-flex justify-content-end'>
-                  {/* TODO link do szczegółów kursu - inne szczegóły dla studenta, nauczyciela i admina*/}
-                {/* <div className='btn btn-success'>See details</div> */}
-             
-              {/* </td> */} 
             </tr>
-            {/* { Materials } */}
-
             {course.materials.map((material) => {
               if (material[0] == 'img') {
                 return (

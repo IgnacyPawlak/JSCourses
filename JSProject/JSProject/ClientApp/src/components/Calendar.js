@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 //TODO delete hardcode
-var calendar = [
+var courses = [
   {
     courseId: 0,
-    date: '01-02-22', 
+    date: '05-02-22', 
     title: 'Get fit', 
     description: 'Dieting, excercise and other important things', 
     teacher: 'Chodakowska' 
@@ -19,20 +19,19 @@ var calendar = [
   },
 ];
 
-
 export class Calendar extends Component {
-  static displayName = Calendar.name;
+  static displayName = courses.name;
   
   constructor(props) {
     super(props);   
     this.state = { 
-      courses: calendar
+      calendar: courses
     }; 
   }  
   
   render() {
 
-    const CoursesTable = this.state.courses.map((course) => {
+    const CoursesCalendarTable = this.state.calendar.map((course) => {
       return (
         <tr key={course.courseId}>
           <td>{course.date}</td>
@@ -48,7 +47,7 @@ export class Calendar extends Component {
     })
 
     let Table;
-    if(this.state.courses.length > 0) {
+    if(this.state.calendar.length > 0) {
       Table  = 
       <table className="table table-hover">
       <thead>      
@@ -60,7 +59,7 @@ export class Calendar extends Component {
         </tr>
       </thead>
       <tbody ref={this.tableBody}>         
-        { CoursesTable }
+        { CoursesCalendarTable }
       </tbody>
     </table>
     }
