@@ -10,6 +10,6 @@ namespace JSProject.DTO
         public string Description { get; set; }
         public string Date { get; set; }
         public string Teacher { get; set; }
-        public ICollection<CourseMaterialDTO> Materials { get; set; }
+        public IEnumerable<CourseMaterialDTO> Materials { get; set; }
     }
 }
