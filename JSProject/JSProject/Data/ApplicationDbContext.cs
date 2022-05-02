@@ -22,8 +22,6 @@ namespace JSProject.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseMaterial> CourscMaterials { get; set; }
         public DbSet<CourseMaterialType> CourscMaterialTypes { get; set; }
-
-
         public DbSet<CourseMaterialsToCourses> CourseMaterialsToCourses { get; set; }
         public DbSet<CoursesToUsers> CoursesToUsers { get; set; }
 
@@ -33,7 +31,39 @@ namespace JSProject.Data
         {
             base.OnModelCreating(builder);
 
+            //////////////////////////////////////// CourseMaterialType one to many CourseMaterial
+            builder.Entity<CourseMaterial>()
+                .HasOne<CourseMaterialType>(x => x.Type)
+                .WithMany(y => y.CourscMaterials)
+                .HasForeignKey(z => z.CourseMaterialTypeId);
 
+            //////////////////////////////////////// Course many to many CourseMaterial
+            builder.Entity<CourseMaterialsToCourses>().HasKey(k => new { k.MaterialId, k.CourseId });
+
+            builder.Entity<CourseMaterialsToCourses>()
+                .HasOne<Course>(x => x.Course)
+                .WithMany(y => y.Materials)
+                .HasForeignKey(z => z.CourseId);
+
+
+            builder.Entity<CourseMaterialsToCourses>()
+                .HasOne<CourseMaterial>(x => x.Material)
+                .WithMany(y => y.Courses)
+                .HasForeignKey(z => z.MaterialId);
+
+            //////////////////////////////////////// Item many to many Department
+            builder.Entity<CoursesToUsers>().HasKey(k => new { k.CourseId, k.UserId });
+
+            builder.Entity<CoursesToUsers>()
+                .HasOne<ApplicationUser>(x => x.User)
+                .WithMany(y => y.Courses)
+                .HasForeignKey(z => z.UserId);
+
+
+            builder.Entity<CoursesToUsers>()
+                .HasOne<Course>(x => x.Course)
+                .WithMany(y => y.Users)
+                .HasForeignKey(z => z.CourseId);
         }
 
     }

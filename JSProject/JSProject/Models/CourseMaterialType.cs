@@ -10,6 +10,6 @@ namespace JSProject.Models
         public string Name { get; set; }
 
         // relation
-        ICollection<CourseMaterial> CourscMaterials { get; set; } 
+        public ICollection<CourseMaterial> CourscMaterials { get; set; } 
     }
 }

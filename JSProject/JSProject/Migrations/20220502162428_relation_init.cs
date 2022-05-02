@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace JSProject.Data.Migrations
+namespace JSProject.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class relation_init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,35 @@ namespace JSProject.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourscMaterialTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourscMaterialTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Date = table.Column<string>(nullable: true),
+                    Teacher = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,6 +215,74 @@ namespace JSProject.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CourscMaterials",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(nullable: true),
+                    CourseMaterialTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourscMaterials", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CourscMaterials_CourscMaterialTypes_CourseMaterialTypeId",
+                        column: x => x.CourseMaterialTypeId,
+                        principalTable: "CourscMaterialTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CoursesToUsers",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CoursesToUsers", x => new { x.CourseId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_CoursesToUsers_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CoursesToUsers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourseMaterialsToCourses",
+                columns: table => new
+                {
+                    MaterialId = table.Column<int>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseMaterialsToCourses", x => new { x.MaterialId, x.CourseId });
+                    table.ForeignKey(
+                        name: "FK_CourseMaterialsToCourses_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CourseMaterialsToCourses_CourscMaterials_MaterialId",
+                        column: x => x.MaterialId,
+                        principalTable: "CourscMaterials",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -224,6 +321,21 @@ namespace JSProject.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourscMaterials_CourseMaterialTypeId",
+                table: "CourscMaterials",
+                column: "CourseMaterialTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseMaterialsToCourses_CourseId",
+                table: "CourseMaterialsToCourses",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CoursesToUsers_UserId",
+                table: "CoursesToUsers",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
@@ -265,6 +377,12 @@ namespace JSProject.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CourseMaterialsToCourses");
+
+            migrationBuilder.DropTable(
+                name: "CoursesToUsers");
+
+            migrationBuilder.DropTable(
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
@@ -274,7 +392,16 @@ namespace JSProject.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "CourscMaterials");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "CourscMaterialTypes");
         }
     }
 }
