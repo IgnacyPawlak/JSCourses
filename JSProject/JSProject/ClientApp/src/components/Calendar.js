@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 //TODO delete hardcode
-var userCourses = [
+var calendar = [
   {
     courseId: 0,
     date: '01-02-22', 
@@ -26,7 +26,7 @@ export class Calendar extends Component {
   constructor(props) {
     super(props);   
     this.state = { 
-      courses: userCourses
+      courses: calendar
     }; 
   }  
   
@@ -39,10 +39,10 @@ export class Calendar extends Component {
           <td>{course.title}</td>
           <td>{course.description}</td>
           <td>{course.teacher}</td>  
-          <td className="d-flex justify-content-end">
+          {/* <td className="d-flex justify-content-end">
               {/* TODO link do szczegółów kursu - inne szczegóły dla studenta, nauczyciela i admina*/}
-                <div className='btn btn-success'>See details</div>
-              </td>        
+                {/* <div className='btn btn-success'>See details</div>
+              </td>         */}
         </tr>
       )
     })
@@ -53,10 +53,10 @@ export class Calendar extends Component {
       <table className="table table-hover">
       <thead>      
         <tr>
-          <th>Date time</th>
-          <th>Course</th>
-          <th>Description</th>
-          <th colSpan={2}>Teacher</th>
+          <th className='col-2'>Date</th>
+          <th className='col-2'>Course</th>
+          <th className='col-6'>Description</th>
+          <th className='col-2'>Teacher</th>
         </tr>
       </thead>
       <tbody ref={this.tableBody}>         

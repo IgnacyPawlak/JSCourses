@@ -8,7 +8,7 @@ export class Payments extends Component {
   }
 
  
-
+ /* TODO: role - student */
   render() {
     return (
       <div>
