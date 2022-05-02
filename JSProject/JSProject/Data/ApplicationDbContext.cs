@@ -17,5 +17,24 @@ namespace JSProject.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseMaterial> CourscMaterials { get; set; }
+        public DbSet<CourseMaterialType> CourscMaterialTypes { get; set; }
+
+
+        public DbSet<CourseMaterialsToCourses> CourseMaterialsToCourses { get; set; }
+        public DbSet<CoursesToUsers> CoursesToUsers { get; set; }
+
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+
+        }
+
     }
 }

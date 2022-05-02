@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj": {}
+    "D:\\Project\\WSB\\JSCourses\\JSProject\\JSProject\\JSProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj": {
+    "D:\\Project\\WSB\\JSCourses\\JSProject\\JSProject\\JSProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj",
+        "projectUniqueName": "D:\\Project\\WSB\\JSCourses\\JSProject\\JSProject\\JSProject.csproj",
         "projectName": "JSProject",
-        "projectPath": "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\JSProject.csproj",
-        "packagesPath": "C:\\Users\\dagma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dagma\\Documents\\aa WSB\\sem 6 JS\\projekt\\JSCourses\\JSProject\\JSProject\\obj\\",
+        "projectPath": "D:\\Project\\WSB\\JSCourses\\JSProject\\JSProject\\JSProject.csproj",
+        "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\WSB\\JSCourses\\JSProject\\JSProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\dagma\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

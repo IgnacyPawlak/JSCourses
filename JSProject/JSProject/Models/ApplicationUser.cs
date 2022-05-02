@@ -8,5 +8,10 @@ namespace JSProject.Models
 {
     public class ApplicationUser : IdentityUser
     {
+
+
+
+        // relation
+        public ICollection<CoursesToUsers> Courses { get; set; }
     }
 }
