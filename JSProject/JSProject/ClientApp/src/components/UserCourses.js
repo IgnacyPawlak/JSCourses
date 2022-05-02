@@ -2,6 +2,38 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactDOM } from 'react';
 import { Container } from 'reactstrap';
+import Markup from 'react-html-markup';
+//import cupcake from '../resources/img/cupcake.png';
+
+var materialsTemp0 = [
+  [
+    'img', 
+    'https://media.wired.com/photos/598e35fb99d76447c4eb1f28/16:9/w_2123,h_1194,c_limit/phonepicutres-TA.jpg'
+  ],
+  [
+    'text',
+    `You probably have some idea of how fit you are. But assessing and recording baseline fitness scores can give you benchmarks against which to measure your progress. To assess your aerobic and muscular fitness, flexibility, and body composition, consider recording: 
+    <ul>
+    <li>Your pulse rate before and immediately after walking 1 mile (1.6 kilometers\)</li> 
+    <li>How long it takes to walk 1 mile, or how long it takes to run 1.5 miles (2.41 kilometers)</li>
+    <li> How many standard or modified pushups you can do at a time</li>
+    <li>How far you can reach forward while seated on the floor with your legs in front of you Your waist circumference, just above your hipbones Your body mass index</li>
+    </ul>`
+  ]
+];
+
+var materialsTemp1 = [
+  [
+    'img', 
+    'https://cdn.mos.cms.futurecdn.net/v44n2mBJgaRoCkkFGjDtRP.jpeg'
+  ],
+  [
+    'text',
+    `How do I run without getting tired?
+    <b>Warm Up. Avoid running without a warm-up first.</b> Performing some dynamic stretches and low-intensity aerobic exercise for five to 15 minutes before a run can help to reduce injury risk by warming up your muscles. Factor each warm-up into your training plan to avoid running out of time or coming up with excuses.`
+  ]
+];
+ 
 
 //TODO delete hardcode
 var userCourses = [
@@ -11,6 +43,7 @@ var userCourses = [
     title: 'Get fit', 
     description: 'Dieting, excercise and other important things', 
     teacher: 'Chodakowska',
+    materials: materialsTemp0 
      
   },
   {
@@ -18,7 +51,8 @@ var userCourses = [
     date: '02-02-22', 
     title: 'Get fit 2', 
     description: 'Dieting, excercise and other important things', 
-    teacher: 'Chodakowska' 
+    teacher: 'Chodakowska',
+    materials: materialsTemp1
   },
 ];
 
@@ -33,26 +67,15 @@ export class UserCourses extends Component {
   }
 
 
-//TODO do naprawy Daga
-  // renderTableBody() {
-  //   let data = [];
-  //   for (let i = 0; i < this.courses.length; i++) {
-  //     for (let j = 0; j < this.courses[i].length; j++) {
-  //       data.push(<td>{data[i][j]}</td>);
-  //     }
-  //   }
-  //   return data;
-  // }
 
   render() {
-//TODO course details on display
-
-
-    const CoursesTable = this.state.courses.map((course) => {
+//TODO course details on display  
+    const CoursesTables = this.state.courses.map((course) => {
       return (
         <table className="table table-hover w-100 mt-5 border-0">
           <thead>
             <tr key={course.courseId} className="border-bottom">
+                {/*TODO?: pokazywanie/chowanie detali kursu na kliknięcie th course.title */}
               <th colSpan={2} className="w-100 border-0">{course.title}</th>
             </tr>
           </thead>
@@ -64,23 +87,47 @@ export class UserCourses extends Component {
               </td>
               <td className='col-6'>
                 {course.description}
-              </td>
-              <td className='col d-flex justify-content-end'>
-                  {/* TODO link do szczegółów kursu - inne szczegóły dla studenta, nauczyciela i admina*/}
-                <div className='btn btn-success'>See details</div>
+               
               </td>
             </tr>
+            {course.materials.map((material) => {
+              if (material[0] == 'img') {
+                return (
+                  <tr>
+                    <td colSpan={2}>
+                      <img src={material[1]} alt="image"  className='w-100'/>
+                    </td>
+                  </tr>
+                )
+              }
+              else  if (material[0] == 'text') {
+                return (
+                  <tr>
+                    <td colSpan={2}>
+                      <Markup className='text-justify' htmlString={material[1]}/>
+                     {/* {material[1]} */}
+                    </td>
+                  </tr>
+                )
+              }
+               
+            })
+            }
+
           </tbody>
         </table>
       )
     })
 
-    let Tables;
+    let Courses;
     if(this.state.courses.length > 0) {
-      Tables  =  
+      Courses  =  
       <table className='w-100'>
-        { CoursesTable }       
+        { CoursesTables }       
       </table>
+    }
+    else {
+      Courses = <p>You haven't signed up for any courses yet.</p>
     }
    
     return (    
@@ -90,7 +137,7 @@ export class UserCourses extends Component {
           <Link className="btn btn-primary m-2" to="/all-courses">See all our courses</Link>                    
         </div>
       
-      { Tables }
+      { Courses }
 
       </div>
     
