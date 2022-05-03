@@ -12,6 +12,8 @@ namespace JSProject.Models
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public string Teacher { get; set; }
+        public double Price { get; set; }
+        public int LimitOpenDay { get; set; }
 
         // relation
         public ICollection<CourseMaterialsToCourses> Materials { get; set; }
