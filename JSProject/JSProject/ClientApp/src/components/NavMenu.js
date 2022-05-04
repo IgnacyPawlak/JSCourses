@@ -17,7 +17,7 @@ export class NavMenu extends Component {
     this.state = {
       collapsed: true,
       //TODO delete hardcode
-      role: 'teacher'
+      role: 'admin'
     };
   }
 
@@ -43,7 +43,13 @@ export class NavMenu extends Component {
         </NavLink>
       </NavItem>
       ;
-      
+      const adminCoursesNavItem =
+      <NavItem>
+        <NavLink tag={Link} className="text-dark" to="/admin-courses">
+          Courses
+        </NavLink>
+      </NavItem>
+      ;
       
     const paymentsNavItem =
       <NavItem>
@@ -73,7 +79,7 @@ export class NavMenu extends Component {
       //TODO add teacherCourses, addCourseMaterials
       menuNavItems =
         <span className='d-flex'>
-          { teacherCoursesNavItem }
+          {teacherCoursesNavItem}
           {calendarNavItem}
         </span>
         ;
@@ -82,6 +88,7 @@ export class NavMenu extends Component {
       //TODO add allPayments?, addCourse
       menuNavItems =
         <span className='d-flex'>
+          {adminCoursesNavItem}
           {calendarNavItem}
         </span>
         ;

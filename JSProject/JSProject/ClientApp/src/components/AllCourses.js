@@ -110,10 +110,11 @@ export class AllCourses extends Component {
           <td>{course.description}</td>
           <td>{course.teacher}</td>
           <td className='d-flex justify-content-end'>
-          { this.state.role == 'student' ?
-          (course.isBought == 'yes' ? <Button className='btn btn-sm btn-light disabled'>Accessed</Button> : <Button className='btn btn-sm btn-warning' onClick={() => { this.openPaymentModal() }}>Buy now</Button>) : <span></span>
-          }
-      </td>        </tr>
+            {this.state.role == 'student' ?
+              (course.isBought == 'yes' ? <Button className='btn btn-sm btn-light disabled'>Accessed</Button> : <Button className='btn btn-sm btn-warning' onClick={() => { this.openPaymentModal() }}>Buy now</Button>) : <span></span>
+            }
+          </td>        
+          </tr>
       )
     })
 

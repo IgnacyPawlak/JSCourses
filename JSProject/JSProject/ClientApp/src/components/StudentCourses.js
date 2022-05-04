@@ -7,7 +7,7 @@ import Markup from 'react-html-markup';
 
 var materialsTemp0 = [
   [
-    'img', 
+    'img',
     'https://media.wired.com/photos/598e35fb99d76447c4eb1f28/16:9/w_2123,h_1194,c_limit/phonepicutres-TA.jpg'
   ],
   [
@@ -24,7 +24,7 @@ var materialsTemp0 = [
 
 var materialsTemp1 = [
   [
-    'img', 
+    'img',
     'https://cdn.mos.cms.futurecdn.net/v44n2mBJgaRoCkkFGjDtRP.jpeg'
   ],
   [
@@ -33,24 +33,24 @@ var materialsTemp1 = [
     <b>Warm Up. Avoid running without a warm-up first.</b> Performing some dynamic stretches and low-intensity aerobic exercise for five to 15 minutes before a run can help to reduce injury risk by warming up your muscles. Factor each warm-up into your training plan to avoid running out of time or coming up with excuses.`
   ]
 ];
- 
+
 
 //TODO delete hardcode
 var userCourses = [
   {
     courseId: 0,
-    date: '01-02-22', 
-    title: 'Get fit', 
-    description: 'Dieting, excercise and other important things', 
+    date: '01-02-22',
+    title: 'Get fit',
+    description: 'Dieting, excercise and other important things',
     teacher: 'Chodakowska',
-    materials: materialsTemp0 
-     
+    materials: materialsTemp0
+
   },
   {
     courseId: 1,
-    date: '02-02-22', 
-    title: 'Get fit 2', 
-    description: 'Dieting, excercise and other important things', 
+    date: '02-02-22',
+    title: 'Get fit 2',
+    description: 'Dieting, excercise and other important things',
     teacher: 'Chodakowska',
     materials: materialsTemp1
   },
@@ -59,12 +59,12 @@ var userCourses = [
 export class StudentCourses extends Component {
   static displayName = StudentCourses.name;
 
-//info dla niewtajemniczonych: student widzi swoje wykupione kursy (isBought)
-//fajnie jakby już przychodziła tablica z kursami użytkownika
+  //info dla niewtajemniczonych: student widzi swoje wykupione kursy (isBought)
+  //fajnie jakby już przychodziła tablica z kursami użytkownika
 
   constructor(props) {
-    super(props);    
-    this.state = { 
+    super(props);
+    this.state = {
       //TODO set courses to courses where student's relation to courses isBought == true
       courses: userCourses,
       //TODO set role to user's role
@@ -73,19 +73,19 @@ export class StudentCourses extends Component {
   }
 
   //TODO make page available only for students 
-  
+
   courseDetailsToggle(id) {
     document.getElementById(`${id}`).classList.toggle("d-none");
   }
 
   render() {
-      const CoursesTables = this.state.courses.map((course) => {
+    const CoursesTables = this.state.courses.map((course) => {
       return (
         <table className="table table-hover w-100 mt-5 border-0">
           <thead>
             <tr key={course.courseId} className="border-bottom">
-              <th colSpan={2} title='Click to hide/show details'className="w-100 border-0" role='button' onClick={() => {this.courseDetailsToggle(course.courseId)}}><h2>{course.title}</h2>
-         </th>
+              <th colSpan={2} title='Click to hide/show details' className="w-100 border-0" role='button' onClick={() => { this.courseDetailsToggle(course.courseId) }}><h2>{course.title}</h2>
+              </th>
             </tr>
           </thead>
           <tbody id={course.courseId} className='d-none'>
@@ -103,51 +103,49 @@ export class StudentCourses extends Component {
                 return (
                   <tr>
                     <td colSpan={2}>
-                      <img src={material[1]} alt="image"  className='w-100'/>
+                      <img src={material[1]} alt="image" className='w-100' />
                     </td>
                   </tr>
                 )
               }
-              else  if (material[0] == 'text') {
+              else if (material[0] == 'text') {
                 return (
                   <tr>
                     <td colSpan={2}>
-                      <Markup className='text-justify' htmlString={material[1]}/>
+                      <Markup className='text-justify' htmlString={material[1]} />
                     </td>
                   </tr>
                 )
               }
-               
             })
             }
-
           </tbody>
         </table>
       )
     })
 
     let Courses;
-    if(this.state.courses.length > 0) {
-      Courses  =  
-      <table className='w-100'>
-        { CoursesTables }       
-      </table>
+    if (this.state.courses.length > 0) {
+      Courses =
+        <table className='w-100'>
+          {CoursesTables}
+        </table>
     }
     else {
       Courses = <p>You haven't signed up for any courses yet.</p>
     }
-   
-    return (    
+
+    return (
       <div>
         <div className="d-flex justify-content-between mb-3">
-          <h1>My courses:</h1>  
-          <Link className="btn btn-primary m-2" to="/all-courses">See all our courses</Link>                    
+          <h1>My courses:</h1>
+          <Link className="btn btn-primary m-2" to="/all-courses">See all our courses</Link>
         </div>
-      
-      { Courses }
+
+        {Courses}
 
       </div>
-    
+
     );
   }
 }
