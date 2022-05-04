@@ -56,38 +56,46 @@ var userCourses = [
   },
 ];
 
-export class UserCourses extends Component {
-  static displayName = UserCourses.name;
+export class StudentCourses extends Component {
+  static displayName = StudentCourses.name;
+
+//info dla niewtajemniczonych: student widzi swoje wykupione kursy (isBought)
+//fajnie jakby już przychodziła tablica z kursami użytkownika
 
   constructor(props) {
     super(props);    
     this.state = { 
-      courses: userCourses
+      //TODO set courses to courses where student's relation to courses isBought == true
+      courses: userCourses,
+      //TODO set role to user's role
+      role: 'teacher'
     };
   }
 
-
+  //TODO make page available only for students 
+  
+  courseDetailsToggle(id) {
+    document.getElementById(`${id}`).classList.toggle("d-none");
+  }
 
   render() {
-//TODO course details on display  
-    const CoursesTables = this.state.courses.map((course) => {
+      const CoursesTables = this.state.courses.map((course) => {
       return (
         <table className="table table-hover w-100 mt-5 border-0">
           <thead>
             <tr key={course.courseId} className="border-bottom">
-                {/*TODO?: pokazywanie/chowanie detali kursu na kliknięcie th course.title */}
-              <th colSpan={2} className="w-100 border-0">{course.title}</th>
+              <th colSpan={2} title='Click to hide/show details'className="w-100 border-0" role='button' onClick={() => {this.courseDetailsToggle(course.courseId)}}><h2>{course.title}</h2>
+         </th>
             </tr>
           </thead>
-          <tbody>
-            <tr className='w-100 border-top-0  text-secondary'>
+          <tbody id={course.courseId} className='d-none'>
+            <tr className='w-100 border-top-0 text-secondary'>
               <td className='col-4'>
                 Course date: {course.date} <br />
                 Teacher: {course.teacher} <br />
               </td>
               <td className='col-6'>
                 {course.description}
-               
               </td>
             </tr>
             {course.materials.map((material) => {
@@ -105,7 +113,6 @@ export class UserCourses extends Component {
                   <tr>
                     <td colSpan={2}>
                       <Markup className='text-justify' htmlString={material[1]}/>
-                     {/* {material[1]} */}
                     </td>
                   </tr>
                 )

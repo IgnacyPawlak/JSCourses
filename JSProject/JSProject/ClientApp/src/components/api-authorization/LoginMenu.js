@@ -7,13 +7,9 @@ import { ApplicationPaths } from './ApiAuthorizationConstants';
 export class LoginMenu extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            //TODO uncomment & delete hardcode:
-            // isAuthenticated: false,
-            // userName: null
-            isAuthenticated: true,
-            userName: 'Basia'
+            isAuthenticated: false,
+            userName: null            
         };
     }
    
@@ -36,7 +32,6 @@ export class LoginMenu extends Component {
 
     render() {    
         const { isAuthenticated, userName } = this.state;
-
         if (!isAuthenticated) {
             const registerPath = `${ApplicationPaths.Register}`;
             const loginPath = `${ApplicationPaths.Login}`;

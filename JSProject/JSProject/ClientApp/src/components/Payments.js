@@ -9,27 +9,37 @@ var userCourses = [
     courseTitle: 'Get fit', 
     coursePrice: 100,
     accessTimeDays: 30,
-    paymentStatus: 'paid'
+    isBought: 'yes'
   },
   {
     courseId: 1,
     courseTitle: 'Maths', 
     coursePrice: 50,
     accessTimeDays: 60,
-    paymentStatus: 'awaiting'
+    isBought: 'no'
   },
 ];
 
 export class Payments extends Component {
   static displayName = Payments.name;
 
+//info dla niewtajemniczonych: 
+//student widzi swoje podsumowanie wykupionych kursów: tytuł kursu, dni dostępu, cena 
+//widok admina - zobaczę czy starczy czasu, jeśli tak to:
+//admin widzi listę kursów: nazwa użytkownika, tytuł kursu, dni dostępu, cena 
+
   constructor(props) {
     super(props);
     this.state = { 
       courses: userCourses,
-      showPaymentModal: false
+      showPaymentModal: false,
+      //TODO ustawić na rolę użytkownika
+      role: 'student'
     };
   }
+
+//TODO student widzi swoje podsumowanie wykupionych kursów: tytuł kursu, dni dostępu, cena 
+//TODO ? admin widzi listę kursów: nazwa użytkownika, tytuł kursu, dni dostępu, cena 
 
  buyCourse() {
   let newCourseTitle = document.getElementById("newCourseTitle").value;
@@ -44,14 +54,15 @@ export class Payments extends Component {
     
    
     const CoursesCalendarTable = this.state.courses.map((course) => {
+      if(course.isBought == 'yes') {
       return (
         <tr key={course.courseId}>
-          <td className='col-3'>{course.courseTitle}</td>      
-          <td className='col-2'>{course.accessTimeDays} days</td>  
-          <td className='col-2'>${course.coursePrice}</td>        
-          <td className='col-2 text-capitalize'>{course.paymentStatus}</td>         
+          <td className='col-6'>{course.courseTitle}</td>      
+          <td className='col-3'>{course.accessTimeDays} days</td>  
+          <td className='col-3'>${course.coursePrice}</td>                          
         </tr>
       )
+      }
     });
 
     let Table;
@@ -60,11 +71,9 @@ export class Payments extends Component {
         <table className="table table-hover">
       <thead>      
         <tr>
-          <th className='col-3'>Course</th>          
-          <th className='col-2'>Access</th>
-          <th className='col-2'>Price</th>
-          <th className='col-4'>Payment</th>
-          
+          <th className='col-6'>Course</th>          
+          <th className='col-3'>Access</th>
+          <th className='col-3'>Price</th>          
         </tr>
       </thead>
       <tbody ref={this.tableBody}>         

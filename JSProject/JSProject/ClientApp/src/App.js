@@ -5,7 +5,8 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Calendar } from './components/Calendar';
 import { Payments } from './components/Payments';
-import { UserCourses } from './components/UserCourses';
+import { StudentCourses } from './components/StudentCourses';
+import { TeacherCourses } from './components/TeacherCourses';
 import { AllCourses } from './components/AllCourses';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
@@ -23,7 +24,8 @@ export default class App extends Component {
         <Route exact path='/' component={Home} />
         <Route path='/calendar' component={Calendar} />
         <Route path='/payments' component={Payments} />
-        <Route path='/user-courses' component={UserCourses} />
+        <Route path='/student-courses' component={StudentCourses} />
+        <Route path='/teacher-courses' component={TeacherCourses} />
         <Route path='/all-courses' component={AllCourses} />
 
         <AuthorizeRoute path='/fetch-data' component={FetchData} />

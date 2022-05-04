@@ -41,25 +41,34 @@ var allCourses = [
   },
 ];
 
-
 export class AllCourses extends Component {
   static displayName = AllCourses.name;
+//info dla niewtajemniczonych: wszyscy zalogowani widzą listę kursów
+//student ma widoczny przycisk "buy course", co po wybraniu kursu (i pewnie wpisaniu bardzo "legitnych" cyferek konta) spowoduje zmianę statusu isBought w relacji student-course
 
   constructor(props) {
     super(props);
     this.state = {
+      //TODO set courses to all courses in database, delete hardcode
       courses: allCourses,
-      showPaymentModal: true
+      //TODO set user data to current user, delete hardcode
+      userId: 0,
+      role: 'student'
     };
   }
 
+//TODO make this page available to all logged users
+
   savePayment() {
-    //TODO zmiana statusu isBought dla kursu znalezionego po courseId
-    this.closeModal();
+    //TODO zmiana statusu isBought dla kursu znalezionego po courseId dla obecnego użytkownika
+    this.closePaymentModal();
   }
 
-  closeModal() {
-    document.getElementById("popup").style.display = 'none';
+  openPaymentModal() {
+    document.getElementById("payment-modal").style.display = 'block';
+  }
+  closePaymentModal() {
+    document.getElementById("payment-modal").style.display = 'none';
   }
 
   render() {
@@ -70,12 +79,12 @@ export class AllCourses extends Component {
       ;
     const paymentModal = this.state.courses.map((course) => {
       return (
-        <div class="modal" id="popup">
+        <div class="modal" id="payment-modal">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="popupTitle">Access new course</h5>
-                <button type="button" class="close" onClick={() => {this.closeModal()}} aria-label="Cancel">
+                <button type="button" class="close" onClick={() => {this.closePaymentModal()}} aria-label="Cancel">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -83,14 +92,15 @@ export class AllCourses extends Component {
                 {paymentForm}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onClick={() => { this.closeModal()}}>Close</button>
-                <button type="button" class="btn btn-primary" onClick={() => {this.closeModal()}}>Save changes</button>
+                <button type="button" class="btn btn-secondary" onClick={() => { this.closePaymentModal()}}>Close</button>
+                <button type="button" class="btn btn-primary" onClick={() => {this.savePayment()}}>Save changes</button>
               </div>
             </div>
           </div>
         </div>
       )
     });
+
 
     const CoursesTable = this.state.courses.map((course) => {
       return (
@@ -100,9 +110,10 @@ export class AllCourses extends Component {
           <td>{course.description}</td>
           <td>{course.teacher}</td>
           <td className='d-flex justify-content-end'>
-            {course.isBought == 'yes' ? <Button className='btn btn-sm btn-light disabled'>Accessed</Button> : <Button className='btn btn-sm btn-warning' onClick={() => { document.getElementById("popup").style.display = 'block' }}>Buy now</Button>}
-          </td>
-        </tr>
+          { this.state.role == 'student' ?
+          (course.isBought == 'yes' ? <Button className='btn btn-sm btn-light disabled'>Accessed</Button> : <Button className='btn btn-sm btn-warning' onClick={() => { this.openPaymentModal() }}>Buy now</Button>) : <span></span>
+          }
+      </td>        </tr>
       )
     })
 

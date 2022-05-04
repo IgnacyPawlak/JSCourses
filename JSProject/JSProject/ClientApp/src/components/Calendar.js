@@ -22,6 +22,9 @@ var courses = [
 export class Calendar extends Component {
   static displayName = courses.name;
   
+  //info dla niewtajemniczonych: calendar wyświetla się wszystkim zalogowanym, ALE
+  //każdy użytkownik widzi je adekwatnie do swojej roli - basically: 
+  //widzi to co w student/teacher/adminCourses BEZ materials, Z datą
   constructor(props) {
     super(props);   
     this.state = { 
