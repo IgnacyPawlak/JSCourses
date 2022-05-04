@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JSProject.Migrations
 {
-    public partial class relation_init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,8 +67,10 @@ namespace JSProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Date = table.Column<string>(nullable: true),
-                    Teacher = table.Column<string>(nullable: true)
+                    Date = table.Column<DateTime>(nullable: false),
+                    Teacher = table.Column<string>(nullable: true),
+                    Price = table.Column<double>(nullable: false),
+                    LimitOpenDay = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,6 +218,29 @@ namespace JSProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Value = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payment_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CourscMaterials",
                 columns: table => new
                 {
@@ -240,7 +265,8 @@ namespace JSProject.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    CourseId = table.Column<int>(nullable: false)
+                    CourseId = table.Column<int>(nullable: false),
+                    LimitTermin = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -349,6 +375,11 @@ namespace JSProject.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payment_UserId",
+                table: "Payment",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
                 table: "PersistedGrants",
                 column: "Expiration");
@@ -384,6 +415,9 @@ namespace JSProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "DeviceCodes");
+
+            migrationBuilder.DropTable(
+                name: "Payment");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
