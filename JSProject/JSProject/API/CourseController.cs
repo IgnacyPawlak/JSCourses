@@ -1,9 +1,16 @@
 ﻿using JSProject.Data;
 using JSProject.DTO;
+using JSProject.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,7 +21,7 @@ namespace JSProject.API
     public class CourseController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-
+        private readonly UserManager<IdentityUser> userManager;
         public CourseController(ApplicationDbContext context)
         {
             _context = context;
@@ -62,9 +69,19 @@ namespace JSProject.API
         }
 
         // POST api/<CourseController>
+        [Route("/PostCourse")]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void PostCourse(CourseDTO course)
         {
+            _context.Courses.Add(new Course
+            { 
+                Title = course.Title,
+                Description = course.Description,
+                Price = course.Price,
+                Teacher = course.Teacher,
+                Date = Convert.ToDateTime(course.Date)
+            });
+            _context.SaveChanges();
         }
 
         // PUT api/<CourseController>/5
