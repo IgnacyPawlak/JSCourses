@@ -10,6 +10,9 @@ namespace JSProject.DTO
         public string Description { get; set; }
         public string Date { get; set; }
         public string Teacher { get; set; }
+        public double Price { get; set; }
+        public int LimitOpenDay { get; set; }
+
         public IEnumerable<CourseMaterialDTO> Materials { get; set; }
     }
 }

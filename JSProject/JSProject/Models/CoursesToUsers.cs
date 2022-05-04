@@ -1,7 +1,11 @@
-﻿namespace JSProject.Models
+﻿using System;
+
+namespace JSProject.Models
 {
     public class CoursesToUsers
     {
+        public DateTime LimitTermin { get; set; }
+
         // relation
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }

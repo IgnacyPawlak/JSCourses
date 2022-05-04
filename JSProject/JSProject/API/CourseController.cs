@@ -30,6 +30,8 @@ namespace JSProject.API
                 Description = x.Description,
                 Date = x.Date.ToString("f"),
                 Teacher = x.Teacher,
+                Price = x.Price,
+                LimitOpenDay = x.LimitOpenDay,
                 Materials = x.Materials != null ? x.Materials.Select(y => new CourseMaterialDTO
                 {
                     Type = y.Material.Type.Name,
@@ -49,6 +51,8 @@ namespace JSProject.API
                 Description = x.Description,
                 Date = x.Date.ToString("f"),
                 Teacher = x.Teacher,
+                Price = x.Price,
+                LimitOpenDay= x.LimitOpenDay,
                 Materials = x.Materials != null ? x.Materials.Select(y => new CourseMaterialDTO
                 {
                     Type = y.Material.Type.Name,
