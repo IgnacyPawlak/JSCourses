@@ -65,6 +65,7 @@ namespace JSProject
             }
 
             app.UseHttpsRedirection();
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax });
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
