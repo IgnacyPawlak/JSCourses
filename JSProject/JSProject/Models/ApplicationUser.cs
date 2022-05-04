@@ -13,6 +13,5 @@ namespace JSProject.Models
 
         // relation
         public ICollection<CoursesToUsers> Courses { get; set; }
-        public ICollection<Payment> Payments { get; set; }
     }
 }
