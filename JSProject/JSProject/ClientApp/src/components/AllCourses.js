@@ -59,32 +59,45 @@ export class AllCourses extends Component {
 
 //TODO make this page available to all logged users
 
-  savePayment() {
+  savePayment(courseId) {
     //TODO zmiana statusu isBought dla kursu znalezionego po courseId dla obecnego użytkownika
-    this.closePaymentModal();
+    alert("Course purchased!");
+    this.closePaymentModal(courseId);
   }
 
-  openPaymentModal() {
-    document.getElementById("payment-modal").style.display = 'block';
+  openPaymentModal(courseId) {
+    document.getElementById(`${courseId}-payment-modal`).style.display = 'block';
   }
-  closePaymentModal() {
-    document.getElementById("payment-modal").style.display = 'none';
+  closePaymentModal(courseId) {
+    document.getElementById(`${courseId}-payment-modal`).style.display = 'none';
   }
 
   render() {
     const paymentForm = 
         <form>
-          ...
+          <label>Course</label>
+          <select class="form-control">
+            <option value="none" selected disabled hidden>Select a course</option>
+            { /*TODO wypełnić nazwami kursów */}
+          </select>
+
+          <label>Card number</label>
+          <input class="form-control" type="number" min="0" placeholder='00 00000000 0000000000000000'/>
+
+          <label>Security code</label>
+          <input class="form-control" type="number" min="0" placeholder='000'/>
+
         </form>
       ;
     const paymentModal = this.state.courses.map((course) => {
+      let modalId = `${course.courseId}-payment-modal`;
       return (
-        <div class="modal" id="payment-modal">
+        <div class="modal" id={modalId}>
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="popupTitle">Access new course</h5>
-                <button type="button" class="close" onClick={() => {this.closePaymentModal()}} aria-label="Cancel">
+                <button type="button" class="close" onClick={() => {this.closePaymentModal(course.courseId)}} aria-label="Cancel">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -92,8 +105,8 @@ export class AllCourses extends Component {
                 {paymentForm}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onClick={() => { this.closePaymentModal()}}>Close</button>
-                <button type="button" class="btn btn-primary" onClick={() => {this.savePayment()}}>Save changes</button>
+                <button type="button" class="btn btn-secondary" onClick={() => { this.closePaymentModal(course.courseId)}}>Close</button>
+                <button type="button" class="btn btn-primary" onClick={() => {this.savePayment(course.courseId)}}>Save changes</button>
               </div>
             </div>
           </div>
@@ -111,7 +124,7 @@ export class AllCourses extends Component {
           <td>{course.teacher}</td>
           <td className='d-flex justify-content-end'>
             {this.state.role == 'student' ?
-              (course.isBought == 'yes' ? <Button className='btn btn-sm btn-light disabled'>Accessed</Button> : <Button className='btn btn-sm btn-warning' onClick={() => { this.openPaymentModal() }}>Buy now</Button>) : <span></span>
+              (course.isBought == 'yes' ? <Button className='btn btn-sm btn-light disabled'>Accessed</Button> : <Button className='btn btn-sm btn-warning' onClick={() => { this.openPaymentModal(course.courseId) }}>Buy now</Button>) : <span></span>
             }
           </td>        
           </tr>
@@ -142,7 +155,10 @@ export class AllCourses extends Component {
         <div>
           <div className="d-flex justify-content-between mb-3">
             <h1>Available courses:</h1>
-            <Link className="btn btn-primary m-2" to="/user-courses">Go back to my courses</Link>
+            { this.state.role == 'student' ?  <Link className="btn btn-primary m-2" to="/student-courses">Go back to my courses</Link> :
+             (this.state.role == 'teacher' ?  <Link className="btn btn-primary m-2" to="/teacher-courses">Go back to my classes</Link> :
+             '')}
+           
           </div>
           {Table}
         </div>

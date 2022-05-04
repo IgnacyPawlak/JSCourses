@@ -98,22 +98,7 @@ export class TeacherCourses extends Component {
         document.getElementById(`${courseId}-modal`).style.display = 'none';
     }  
 
-    render() {
-//TODO jak będzie czas: wyświetlanie odpowiedniego inputu po wybraniu opcji z select
-        // var textInput;
-        // var select; 
-        // let option;
-        // if (document.getElementById("material-type")) {
-        //     option = document.getElementById("material-type").options[select.selectedIndex].value;
-
-        //     if (option == "img") {
-        //         textInput = <input type="url" class="form-control" id="material"></input>;
-        //     }
-        //     else if (option == "text") {
-        //         textInput = <textarea class="form-control" id="material" placeholder='Enter your text'></textarea>;
-        //     }
-        // }
-    
+    render() {    
         const addMaterialsForm =
         <form>
             <label>Type</label>
@@ -159,8 +144,7 @@ export class TeacherCourses extends Component {
                 <table className="table table-hover w-100 mt-5 border-0">
                     <thead>
                         <tr key={course.courseId} className="border-bottom">
-                            <th className="border-0">
-                           
+                            <th className="border-0">                           
                                  <h2>{course.title}</h2>
                                </th>
                                <th className='d-flex justify-content-end'>
@@ -225,7 +209,7 @@ export class TeacherCourses extends Component {
                 {addMaterialsModal}
             <div>
                 <div className="d-flex justify-content-between mb-3">
-                    <h1>My courses:</h1>
+                    <h1>My classes:</h1>
                     <Link className="btn btn-primary m-2" to="/all-courses">See all our courses</Link>
                 </div>
 

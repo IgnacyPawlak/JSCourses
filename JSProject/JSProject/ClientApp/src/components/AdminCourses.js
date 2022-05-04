@@ -111,6 +111,10 @@ export class AdminCourses extends Component {
     alert("Course added");
 
   }
+   
+  courseDetailsToggle(id) {
+    document.getElementById(`${id}`).classList.toggle("d-none");
+  }
 
   render() {
     const deleteCourseModal = this.state.courses.map((course) => {
@@ -126,10 +130,11 @@ export class AdminCourses extends Component {
                 </button>
               </div>              
               <div class="modal-body">
-              <p>Are you sure you want to delete <strong>{course.title}</strong> and all its materials?</p>              </div>
+              <p>Are you sure you want to delete <strong>{course.title}</strong> and all its materials?</p>
+              </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onClick={() => { this.closeDeleteCourseModal(course.courseId)}}>Cancel</button>
-                <button type="button" class="btn btn-primary" onClick={() => {this.deleteCourse(course.courseId)}}>DELETE</button>
+                <button type="button" class="btn btn-light" onClick={() => { this.closeDeleteCourseModal(course.courseId)}}>Cancel</button>
+                <button type="button" class="btn btn-danger" onClick={() => {this.deleteCourse(course.courseId)}}>DELETE</button>
               </div>
             </div>
           </div>
@@ -141,7 +146,7 @@ export class AdminCourses extends Component {
     <form>
      { /*TODO required fields */ }
       <label>Course date</label>
-      <input type="date" id="new-course-date" class="form-control"/>
+      <input type="date" id="new-course-date" class="form-control" required="true"/>
 
       <label>Title</label>
       <input type="text" id="new-course-title" class="form-control"/>
@@ -171,7 +176,7 @@ export class AdminCourses extends Component {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="popupTitle">Create new course</h5>
-                <button type="button" class="close" onClick={() => {this.closeAddCourseModal()}} aria-label="Cancel">
+                <button type="button" class="close" onClick={() => {this.closeAddCourseModal(course.courseId)}} aria-label="Cancel">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>              
@@ -179,8 +184,8 @@ export class AdminCourses extends Component {
                 {addCourseForm}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onClick={() => { this.closeAddCourseModal()}}>Cancel</button>
-                <button type="button" class="btn btn-primary" onClick={() => {this.addCourse(course)}}>Save</button>
+                <button type="button" class="btn btn-secondary" onClick={() => { this.closeAddCourseModal(course.courseId)}}>Cancel</button>
+                <button type="button" class="btn btn-primary" onClick={() => {this.addCourse(course.courseId)}}>Save</button>
               </div>
             </div>
           </div>
@@ -188,51 +193,80 @@ export class AdminCourses extends Component {
       )
     });
 
-
-    const CoursesTable = this.state.courses.map((course) => {
+    const CoursesTables = this.state.courses.map((course) => {
       return (
-        <tr key={course.courseId}>
-          <td>{course.date}</td>
-          <td>{course.title}</td>
-          <td>{course.description}</td>
-          <td>{course.teacher}</td>         
-          <td className='d-flex justify-content-end'>
-            <Button className='btn btn-sm btn-danger'  onClick={() => { this.openDeleteCourseModal(course.courseId) }}>Delete</Button>
-          </td>        
-        </tr>
+        <table className="table table-hover w-100 mt-5 border-0">
+          <thead>
+            <tr key={course.courseId} className="border-bottom">
+              <th className="border-0">
+                <h2>{course.title}</h2>
+              </th>
+              <th className='d-flex justify-content-end'>
+                <button className='btn btn-sm btn-light' onClick={() => { this.courseDetailsToggle(course.courseId) }}>Details</button>
+                <button className='btn btn-sm btn-danger' onClick={() => { this.openDeleteCourseModal(course.courseId) }}>Delete</button>
+              </th>    
+            </tr>
+          </thead>
+          <tbody id={course.courseId} className='d-none'>
+            <tr className='w-100 border-top-0 text-secondary'>
+              <td className='col-4'>
+                Course date: {course.date} <br />
+                Teacher: {course.teacher} <br />
+              </td>
+              <td className='col-6'>
+                {course.description}
+              </td>
+            </tr>
+            {course.materials.map((material) => {
+              if (material[0] == 'img') {
+                return (
+                  <tr>
+                    <td colSpan={2}>
+                      <img src={material[1]} alt="image" className='w-100' />
+                    </td>
+                  </tr>
+                )
+              }
+              else if (material[0] == 'text') {
+                return (
+                  <tr>
+                    <td colSpan={2}>
+                      <Markup className='text-justify' htmlString={material[1]} />
+                    </td>
+                  </tr>
+                )
+              }
+            })
+            }
+          </tbody>
+        </table>
       )
     })
 
-    let Table;
+    let Courses;
     if (this.state.courses.length > 0) {
-      Table =
-        <table class="table table-hover z-index-0">
-          <thead>
-            <tr>
-              <th>Date time</th>
-              <th>Course</th>
-              <th>Description</th>
-              <th colSpan={2}>Teacher</th>
-            </tr>
-          </thead>
-          <tbody ref={this.tableBody}>
-            {CoursesTable}
-          </tbody>
+      Courses =
+        <table className='w-100'>
+          {CoursesTables}
         </table>
+    }
+    else {
+      Courses = <p>You haven't signed up for any courses yet.</p>
     }
 
     return (
-      <span>
-        { deleteCourseModal }
-        { addCourseModal }
-        <div>
-          <div className="d-flex justify-content-between mb-3">
-            <h1>All courses: </h1>
-            <button className="btn btn-info m-2" onClick={() => this.openAddCourseModal()}>Add new course</button>
-          </div>
-          {Table}
+      <div>
+        {deleteCourseModal}
+        {addCourseModal}
+        <div className="d-flex justify-content-between mb-3">
+          <h1>Existing courses:</h1>
+          <button className="btn btn-info m-2" onClick={() => this.openAddCourseModal()}>Add new course</button>
         </div>
-      </span>
+
+        {Courses}
+
+      </div>
+
     );
   }
 }

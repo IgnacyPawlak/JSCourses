@@ -28,10 +28,11 @@ export class Calendar extends Component {
   constructor(props) {
     super(props);   
     this.state = { 
-      calendar: courses
+      calendar: courses,
+      role: 'teacher'
     }; 
   }  
-  
+
   render() {
 
     const CoursesCalendarTable = this.state.calendar.map((course) => {
@@ -41,10 +42,6 @@ export class Calendar extends Component {
           <td>{course.title}</td>
           <td>{course.description}</td>
           <td>{course.teacher}</td>  
-          {/* <td className="d-flex justify-content-end">
-              {/* TODO link do szczegółów kursu - inne szczegóły dla studenta, nauczyciela i admina*/}
-                {/* <div className='btn btn-success'>See details</div>
-              </td>         */}
         </tr>
       )
     })
@@ -71,7 +68,6 @@ export class Calendar extends Component {
       <div>
         <div className="d-flex justify-content-between mb-3">
           <h1>My events:</h1>  
-          <Link className="btn btn-primary m-2" to="/all-courses">See all our courses</Link>
                     
         </div>
       
