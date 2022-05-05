@@ -21,6 +21,20 @@ namespace JSProject.API
             _userManager = userManager;
         }
 
+        [Route("api/User/CurrentUser")]
+        [HttpGet]
+        public UserDTO CurrentUser()
+        {
+            var buffUser = _userManager.GetUserAsync(User).Result;
+
+            return new UserDTO
+            {
+                Id = buffUser.Id,
+                Name = buffUser.UserName,
+                Role = _userManager.IsInRoleAsync(buffUser, "Admin").Result ? "Admin" : _userManager.IsInRoleAsync(buffUser, "Teacher").Result ? "Teacher" : "Student"
+            };
+        }
+
         [Route("api/User/GetUserList")]
         [HttpGet]
         public IEnumerable<UserDTO> GetUserList()
