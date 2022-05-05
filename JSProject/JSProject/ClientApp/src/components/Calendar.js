@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -33,6 +34,18 @@ export class Calendar extends Component {
     }; 
   }  
 
+  getCourses() {
+    //axios.post('http://...', data)
+    axios.get('http://localhost:5000/api/Course/GetCourseList')
+    .then(res =>  {
+      alert(res);
+    })
+    .catch(al => {
+      alert(al);
+    })
+
+  }
+
   render() {
 
     const CoursesCalendarTable = this.state.calendar.map((course) => {
@@ -64,6 +77,8 @@ export class Calendar extends Component {
     </table>
     }
    
+
+
     return (    
       <div>
         <div className="d-flex justify-content-between mb-3">
@@ -73,6 +88,7 @@ export class Calendar extends Component {
       
       { Table }
 
+<button onClick={() => this.getCourses()}>Click</button>
       </div>
     
     );

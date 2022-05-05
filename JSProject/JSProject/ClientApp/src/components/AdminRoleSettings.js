@@ -56,16 +56,13 @@ var allCourses = [
   },
 ];
 
-
-
-export class AdminCourses extends Component {
-  static displayName = AdminCourses.name;
+export class AdminRoleSettings extends Component {
+  static displayName = AdminRoleSettings.name;
 //info dla niewtajemniczonych: admin może przeglądać wszysktie kursy + może tworzyć i usuwać kursy (ze względów czasowych możemy odpuścić sobie edycje i usuwanie materiałów)
-
-constructor(props) {
+  constructor(props) {
     super(props);    
     this.state = { 
-      courses: allCourses,
+      users: allCourses,
       role: 'admin'
     };
   }
