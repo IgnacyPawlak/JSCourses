@@ -3,6 +3,7 @@ import { NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import authService from './AuthorizeService';
 import { ApplicationPaths } from './ApiAuthorizationConstants';
+import axios from 'axios';
 
 export class LoginMenu extends Component {
     constructor(props) {
@@ -28,7 +29,13 @@ export class LoginMenu extends Component {
             isAuthenticated,
             userName: user && user.name
         });
-        console.log(user);
+        axios.get('User/CurrentUser')
+        .then(res => {
+            console.log(res);
+        })
+        .catch(al => {
+            console.log(al);
+        })
     }
 
     render() {    

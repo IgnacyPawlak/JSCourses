@@ -160,6 +160,7 @@ constructor(props) {
       <label>Teacher</label>
       <select class="form-control" name="teacher" id="new-course-teacher">
         <option value="none" selected disabled hidden>Select an Option</option>
+        
         {/*TODO populate select options with teachers*/}
       </select>
 

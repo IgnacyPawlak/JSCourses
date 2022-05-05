@@ -9,11 +9,13 @@ import axios from 'axios';
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 
-if (localStorage.getItem('JSProjectuser:http://localhost:5000:JSProject')) {
-axios.defaults.headers.common['Authorization'] = 'Bearer' + JSON.parse(localStorage.getItem('JSProjectuser:http://localhost:5000:JSProject')).id_token;
+var localhostNumber = '42544';
+
+if (localStorage.getItem(`JSProjectuser:http://localhost:${localhostNumber}:JSProject`)) {
+    axios.defaults.headers.common['Authorization'] = 'Bearer' + JSON.parse(localStorage.getItem(`JSProjectuser:http://localhost:${localhostNumber}:JSProject`)).access_token;
 }
 
-axios.defaults.baseURL = 'http://localhost:5000/api/';
+axios.defaults.baseURL = `http://localhost:${localhostNumber}/api/`;
 
 ReactDOM.render(
   <BrowserRouter basename={baseUrl}>

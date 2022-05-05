@@ -47,6 +47,18 @@ export class Calendar extends Component {
 
   }
 
+  getCurrentUser() {
+    axios.get('User/CurrentUser')
+    .then(res =>  {
+      alert(res);
+      this.state.role = res.role;
+      //console.log(JSON.parse(localStorage.getItem('JSProjectuser:http://localhost:5000:JSProject')).id_token);
+    })
+    .catch(al => {
+      console.log(al);
+    })
+  }
+
   render() {
 
     const CoursesCalendarTable = this.state.calendar.map((course) => {
@@ -81,7 +93,7 @@ export class Calendar extends Component {
 
 
     return (    
-      <div>
+      <div onLoad={() => this.getCurrentUser()}>
         <div className="d-flex justify-content-between mb-3">
           <h1>My events:</h1>  
                     
