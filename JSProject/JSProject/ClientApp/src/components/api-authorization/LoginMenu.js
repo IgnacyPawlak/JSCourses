@@ -28,6 +28,7 @@ export class LoginMenu extends Component {
             isAuthenticated,
             userName: user && user.name
         });
+        console.log(user);
     }
 
     render() {    

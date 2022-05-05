@@ -36,12 +36,13 @@ export class Calendar extends Component {
 
   getCourses() {
     //axios.post('http://...', data)
-    axios.get('http://localhost:5000/api/Course/GetCourseList')
+    axios.get('Course/GetCourseList')
     .then(res =>  {
-      alert(res);
+      console.log(res);
+      //console.log(JSON.parse(localStorage.getItem('JSProjectuser:http://localhost:5000:JSProject')).id_token);
     })
     .catch(al => {
-      alert(al);
+      console.log(al);
     })
 
   }
