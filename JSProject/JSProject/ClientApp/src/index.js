@@ -3,10 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import axios from 'axios';
 //import registerServiceWorker from './registerServiceWorker';
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
+
+axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('JSProjectuser:http://localhost:5000:JSProject').id_token;
 
 ReactDOM.render(
   <BrowserRouter basename={baseUrl}>
