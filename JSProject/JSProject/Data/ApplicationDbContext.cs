@@ -64,6 +64,12 @@ namespace JSProject.Data
                 .HasOne<Course>(x => x.Course)
                 .WithMany(y => y.Users)
                 .HasForeignKey(z => z.CourseId);
+
+            //////////////////////////////////////// user(teacher) one to many Course
+            builder.Entity<Course>()
+                .HasOne<ApplicationUser>(x => x.Teacher)
+                .WithMany(y => y.CoursesTeacher)
+                .HasForeignKey(z => z.TeacherId);
         }
 
     }

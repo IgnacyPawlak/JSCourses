@@ -60,24 +60,6 @@ namespace JSProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Courses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Teacher = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false),
-                    LimitOpenDay = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Courses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DeviceCodes",
                 columns: table => new
                 {
@@ -218,6 +200,30 @@ namespace JSProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    TeacherId = table.Column<string>(nullable: true),
+                    Price = table.Column<double>(nullable: false),
+                    LimitOpenDay = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Courses_AspNetUsers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CourscMaterials",
                 columns: table => new
                 {
@@ -336,6 +342,11 @@ namespace JSProject.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Courses_TeacherId",
+                table: "Courses",
+                column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CoursesToUsers_UserId",
                 table: "CoursesToUsers",
                 column: "UserId");
@@ -401,10 +412,10 @@ namespace JSProject.Migrations
                 name: "Courses");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "CourscMaterialTypes");
 
             migrationBuilder.DropTable(
-                name: "CourscMaterialTypes");
+                name: "AspNetUsers");
         }
     }
 }

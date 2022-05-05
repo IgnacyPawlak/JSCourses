@@ -16,17 +16,16 @@ using System.Threading.Tasks;
 
 namespace JSProject.API
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class CourseController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> userManager;
         public CourseController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [Route("api/Course/GetCourseList")]
         [HttpGet]
         public IEnumerable<CourseDTO> GetCourseList()
         {
@@ -36,7 +35,7 @@ namespace JSProject.API
                 Title = x.Title,
                 Description = x.Description,
                 Date = x.Date.ToString("f"),
-                Teacher = x.Teacher,
+                Teacher = x.Teacher.UserName,
                 Price = x.Price,
                 LimitOpenDay = x.LimitOpenDay,
                 Materials = x.Materials != null ? x.Materials.Select(y => new CourseMaterialDTO
@@ -47,8 +46,8 @@ namespace JSProject.API
             });
         }
 
-        // GET api/<CourseController>/5
-        [HttpGet("{id}")]
+        [Route("api/Course/GetCourseById")]
+        [HttpGet]
         public CourseDTO GetCourseById(int id)
         {
             return _context.Courses.Where(x => x.Id == id).Select(x => new CourseDTO
@@ -57,7 +56,7 @@ namespace JSProject.API
                 Title = x.Title,
                 Description = x.Description,
                 Date = x.Date.ToString("f"),
-                Teacher = x.Teacher,
+                Teacher = x.Teacher.UserName,
                 Price = x.Price,
                 LimitOpenDay= x.LimitOpenDay,
                 Materials = x.Materials != null ? x.Materials.Select(y => new CourseMaterialDTO
@@ -68,32 +67,63 @@ namespace JSProject.API
             }).FirstOrDefault();
         }
 
-        // POST api/<CourseController>
-        [Route("/PostCourse")]
+        [Route("api/Course/GetCourseByUserId")]
+        [HttpGet]
+        public CourseDTO GetCourseByUserId(string userId)
+        {
+            return _context.ApplicationUsers.Where(x => x.Id == userId).SelectMany(x => x.Courses).Select(x => x.Course).Select(x => new CourseDTO
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Description = x.Description,
+                Date = x.Date.ToString("f"),
+                Teacher = x.Teacher.UserName,
+                Price = x.Price,
+                LimitOpenDay = x.LimitOpenDay,
+                Materials = x.Materials != null ? x.Materials.Select(y => new CourseMaterialDTO
+                {
+                    Type = y.Material.Type.Name,
+                    Content = y.Material.Content
+                }) : null
+            }).FirstOrDefault();
+        }
+
+        [Route("api/Course/GetCourseByTeacherName")]
+        [HttpGet]
+        public CourseDTO GetCourseByTeacherName(string name)
+        {
+            return _context.ApplicationUsers.Where(x => x.UserName == name).SelectMany(x => x.Courses).Select(x => x.Course).Select(x => new CourseDTO
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Description = x.Description,
+                Date = x.Date.ToString("f"),
+                Teacher = x.Teacher.UserName,
+                Price = x.Price,
+                LimitOpenDay = x.LimitOpenDay,
+                Materials = x.Materials != null ? x.Materials.Select(y => new CourseMaterialDTO
+                {
+                    Type = y.Material.Type.Name,
+                    Content = y.Material.Content
+                }) : null
+            }).FirstOrDefault();
+        }
+
+        [Route("api/Course/PostCourse")]
         [HttpPost]
         public void PostCourse(CourseDTO course)
         {
+            var buffTeacher = _context.ApplicationUsers.Where(x => x.UserName == course.Teacher).Select(x => x.Id).FirstOrDefault();
+
             _context.Courses.Add(new Course
             { 
                 Title = course.Title,
                 Description = course.Description,
                 Price = course.Price,
-                Teacher = course.Teacher,
+                TeacherId = buffTeacher,
                 Date = Convert.ToDateTime(course.Date)
             });
             _context.SaveChanges();
-        }
-
-        // PUT api/<CourseController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CourseController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

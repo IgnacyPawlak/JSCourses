@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JSProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220504150119_init")]
+    [Migration("20220505124317_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -187,13 +187,15 @@ namespace JSProject.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<string>("Teacher")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("TeacherId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
                 });
@@ -399,6 +401,13 @@ namespace JSProject.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("JSProject.Models.Course", b =>
+                {
+                    b.HasOne("JSProject.Models.ApplicationUser", "Teacher")
+                        .WithMany("CoursesTeacher")
+                        .HasForeignKey("TeacherId");
                 });
 
             modelBuilder.Entity("JSProject.Models.CourseMaterial", b =>
