@@ -35,6 +35,22 @@ namespace JSProject.API
             };
         }
 
+        [Route("api/User/CurrentUserAlt")]
+        [HttpGet]
+        public UserDTO CurrentUserAlt(string buff)
+        {
+            var buffUser = _context.ApplicationUsers.Where(x => x.UserName == buff).FirstOrDefault();
+
+            if (buffUser == null) return null;
+
+            return new UserDTO
+            {
+                Id = buffUser.Id,
+                Name = buffUser.UserName,
+                Role = _userManager.IsInRoleAsync(buffUser, "Admin").Result ? "Admin" : _userManager.IsInRoleAsync(buffUser, "Teacher").Result ? "Teacher" : "Student"
+            };
+        }
+
         [Route("api/User/GetUserList")]
         [HttpGet]
         public IEnumerable<UserDTO> GetUserList()
