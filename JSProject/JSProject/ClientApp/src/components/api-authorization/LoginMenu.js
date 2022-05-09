@@ -29,7 +29,7 @@ export class LoginMenu extends Component {
             isAuthenticated,
             userName: user && user.name
         });
-        axios.get('User/CurrentUser')
+        axios.get('User/CurrentUserAlt')
         .then(res => {
             console.log(res);
         })

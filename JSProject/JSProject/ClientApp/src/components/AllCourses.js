@@ -72,15 +72,11 @@ export class AllCourses extends Component {
     document.getElementById(`${courseId}-payment-modal`).style.display = 'none';
   }
 
+
+
   render() {
     const paymentForm = 
-        <form>
-          <label>Course</label>
-          <select class="form-control">
-            <option value="none" selected disabled hidden>Select a course</option>
-            { /*TODO wypełnić nazwami kursów */}
-          </select>
-
+         <form>
           <label>Card number</label>
           <input class="form-control" type="number" min="0" placeholder='00 00000000 0000000000000000'/>
 
@@ -89,6 +85,7 @@ export class AllCourses extends Component {
 
         </form>
       ;
+
     const paymentModal = this.state.courses.map((course) => {
       let modalId = `${course.courseId}-payment-modal`;
       return (
@@ -96,7 +93,7 @@ export class AllCourses extends Component {
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="popupTitle">Access new course</h5>
+                <h5 class="modal-title" id="popupTitle">Buy {course.title}</h5>
                 <button type="button" class="close" onClick={() => {this.closePaymentModal(course.courseId)}} aria-label="Cancel">
                   <span aria-hidden="true">&times;</span>
                 </button>

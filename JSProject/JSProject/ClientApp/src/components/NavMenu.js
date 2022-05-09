@@ -17,7 +17,7 @@ export class NavMenu extends Component {
     this.state = {
       collapsed: true,
       //TODO delete hardcode
-      role: 'admin'
+      role: 'student'
     };
   }
 

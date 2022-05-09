@@ -79,15 +79,27 @@ export class TeacherCourses extends Component {
 
     saveMaterials(courseId) {
         //console.log('before' + this.state.courses[courseId].materials);
-        let materialType = document.getElementById("material-type").value;
-        let material = document.getElementById("material").value;
-        this.state.courses[courseId].materials.push([materialType, material]);
-        //console.log('after' + this.state.courses[courseId].materials);
+        let newMaterialType = document.getElementById(`${courseId}-material-type`).value;
+        let newMaterial = document.getElementById(`${courseId}-material`).value;
+
+        // let materials = this.state.courses[courseId].materials;
+        // materials.push([newMaterialType, newMaterial]);
+
+        let newCourse = this.state.courses[courseId];
+        newCourse.materials.push([newMaterialType, newMaterial]);
+        
+        this.setState(prevState => ({
+            courses: prevState.courses.map(obj => (obj.courseId === courseId ? newCourse : obj))
+        }));
 
         //TODO save to database
 
+        console.log(courseId);
+
         this.closeAddMaterialsModal(courseId);
-        alert('Changes saved!');
+
+        document.getElementById(`${courseId}-material-type`).value = '';
+        document.getElementById(`${courseId}-material`).value = '';
     }
 
     openAddMaterialsModal(courseId) {        
@@ -99,19 +111,18 @@ export class TeacherCourses extends Component {
     }  
 
     render() {    
-        const addMaterialsForm =
-        <form>
-            <label>Type</label>
-            <select class="form-control" name="material-type" id="material-type">
-                <option value="none" selected disabled hidden>Select an Option</option>
-                <option value="img">Image</option>
-                <option value="text">Text</option>
-            </select>
-            <label>Material</label>
-           {/* {textInput} */}
-           <textarea class="form-control" id="material" placeholder='Enter your text or image URL'></textarea>
-        </form>
-        ;
+        // const addMaterialsForm =
+        // <form>
+        //     <label>Type</label>
+        //     <select class="form-control" name="material-type" id="material-type">
+        //         <option value="none" selected disabled hidden>Select an Option</option>
+        //         <option value="img">Image</option>
+        //         <option value="text">Text</option>
+        //     </select>
+        //     <label>Material</label>
+        //    <textarea class="form-control" id="material" placeholder='Enter your text or image URL'></textarea>
+        // </form>
+        // ;
 
         const addMaterialsModal = this.state.courses.map((course) => {
             let modalId=`${course.courseId}-modal`;
@@ -120,13 +131,23 @@ export class TeacherCourses extends Component {
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="popupTitle">Access new course</h5>
+                        <h5 class="modal-title" id="popupTitle">Add materials to {course.title}</h5>
                         <button type="button" class="close" onClick={() => {this.closeAddMaterialsModal(course.courseId)}} aria-label="Cancel">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        {addMaterialsForm}
+                        <form>
+                            <label>Type</label>
+                            <select class="form-control" name="material-type" id={`${course.courseId}-material-type`}>
+                                <option value="none" selected disabled hidden>Select an Option</option>
+                                <option value="img">Image</option>
+                                <option value="text">Text</option>
+                            </select>
+                            <label>Material</label>
+                            <textarea class="form-control" id={`${course.courseId}-material`} placeholder='Enter your text or image URL'></textarea>
+                        </form>
+                        
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" onClick={() => { this.closeAddMaterialsModal(course.courseId)}}>Close</button>

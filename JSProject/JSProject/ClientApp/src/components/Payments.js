@@ -37,7 +37,7 @@ export class Payments extends Component {
       courses: userCourses,
       showPaymentModal: false,
       //TODO ustawić na rolę użytkownika
-      role: 'teacher'
+      role: 'student'
     };
   }
 

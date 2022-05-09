@@ -29,16 +29,25 @@ export class Calendar extends Component {
   constructor(props) {
     super(props);   
     this.state = { 
+      currentUser: this.user,
       calendar: courses,
-      role: 'teacher'
     }; 
   }  
+
+  user = {
+    id: 0,
+    name: 'name',
+    role: 'test'
+  };
 
   getCourses() {
     //axios.post('http://...', data)
     axios.get('Course/GetCourseList')
     .then(res =>  {
       console.log(res);
+      this.courses = res;
+
+      alert(this.userName);
       //console.log(JSON.parse(localStorage.getItem('JSProjectuser:http://localhost:5000:JSProject')).id_token);
     })
     .catch(al => {
@@ -46,20 +55,33 @@ export class Calendar extends Component {
     })
 
   }
+
+
 
   getCurrentUser() {
-    axios.get('User/CurrentUser')
+    console.log('function called');
+    axios.get('User/CurrentUserAlt', this.userName)
     .then(res =>  {
       alert(res);
-      this.state.role = res.role;
-      //console.log(JSON.parse(localStorage.getItem('JSProjectuser:http://localhost:5000:JSProject')).id_token);
+      this.setState({currentUser: res});
+      console.log(JSON.parse(localStorage.getItem('JSProjectuser:http://localhost:5000:JSProject')).id_token);
     })
     .catch(al => {
       console.log(al);
     })
   }
 
+  userName = '';
+
+
   render() {
+
+    if ( window.parent.document.getElementById('HiddenUserName') ) {
+    this.userName = window.parent.document.getElementById('HiddenUserName').value;
+    }
+    else {
+      this.userName = 'no user found';
+    }
 
     const CoursesCalendarTable = this.state.calendar.map((course) => {
       return (
@@ -94,6 +116,9 @@ export class Calendar extends Component {
 
     return (    
       <div onLoad={() => this.getCurrentUser()}>
+
+                { this.state.currentUser.role }
+
         <div className="d-flex justify-content-between mb-3">
           <h1>My events:</h1>  
                     

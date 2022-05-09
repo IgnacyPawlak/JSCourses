@@ -63,7 +63,7 @@ namespace JSProject.API
             });
         }
 
-        [Route("api/User/GetTeacherList")]
+        [Route("api/User/GetUserById")]
         [HttpGet]
         public UserDTO GetUserById(string userId)
         {

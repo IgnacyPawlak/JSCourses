@@ -43,6 +43,8 @@ var allCourses = [
     title: 'Get fit', 
     description: 'Dieting, excercise and other important things', 
     teacher: 'Chodakowska',
+    price: '120',
+    access: '20',
     materials: materialsTemp0 
      
   },
@@ -52,6 +54,8 @@ var allCourses = [
     title: 'Get fit 2', 
     description: 'Dieting, excercise and other important things', 
     teacher: 'Chodakowska',
+    price: '100',
+    access: '20',
     materials: materialsTemp1
   },
 ];
@@ -66,6 +70,7 @@ constructor(props) {
     super(props);    
     this.state = { 
       courses: allCourses,
+      currentIndex: 0,
       role: 'admin'
     };
   }
@@ -77,10 +82,11 @@ constructor(props) {
     document.getElementById(`${courseId}-delete-modal`).style.display = 'none';
   }
   deleteCourse(courseId) {
-    this.state.courses.splice(courseId, 1);
+    let courses = this.state.courses;
+    courses.splice(courseId, 1);
+    this.setState({courses: courses});
     //TODO save to database
 
-    alert("Course deleted!");
     this.closeDeleteCourseModal(courseId);
   }
 
@@ -91,33 +97,41 @@ constructor(props) {
     document.getElementById("add-course-modal").style.display = 'none';
   }
   addCourse() {
-    let id = this.state.courses.length;
-    let date = document.getElementById("new-course-date").value;
-    let title =  document.getElementById("new-course-title").value;
-    let description =  document.getElementById("new-course-description").value;
-    let teacher =  document.getElementById("new-course-teacher").value;
-    let price =  document.getElementById("new-course-price").value;
-    let access =  document.getElementById("new-course-access-days").value;
-    let materials = [];
-    
-    //TODO dodać price do push jak będzie szło do bazy
-    this.state.courses.push({
-      courseId: id, 
-      date: date, 
-      title: title, 
-      description: description, 
-      teacher: teacher, 
-      materials: materials
-    });
+    let newid = this.state.courses.length;
+    let newdate = document.getElementById("new-course-date").value;
+    let newtitle =  document.getElementById("new-course-title").value;
+    let newdescription =  document.getElementById("new-course-description").value;
+    let newteacher =  document.getElementById("new-course-teacher").value;
+    let newprice =  document.getElementById("new-course-price").value;
+    let newaccess =  document.getElementById("new-course-access-days").value;
+    let newmaterials = [];   
+
+    const newCourse = {
+      courseId: newid,
+      date: newdate,
+      title: newtitle,
+      description: newdescription,
+      teacher: newteacher,
+      price: newprice,
+      access: newaccess,
+      materials: newmaterials
+    };
+
+    this.setState(prevState => ({
+      courses: [...prevState.courses, newCourse]
+  }));
+
+     //TODO dodać do bazy
   
     this.closeAddCourseModal();
     alert("Course added");
-
   }
    
   courseDetailsToggle(id) {
     document.getElementById(`${id}`).classList.toggle("d-none");
   }
+
+  
 
   render() {
     const deleteCourseModal = this.state.courses.map((course) => {
