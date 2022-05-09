@@ -54,7 +54,8 @@ export class LoginMenu extends Component {
     authenticatedView(userName, profilePath, logoutPath) {
         return (<Fragment>
             <NavItem>
-                <NavLink tag={Link} className="text-dark" to={profilePath}>Hello, {userName}!</NavLink>
+                <NavLink id="UserCounterUserName" tag={Link} className="text-dark" to={profilePath}>Hello, {userName}!</NavLink>
+                <input type="hidden" id="HiddenUserName" value={userName} />
             </NavItem>
             <NavItem class="text-secondary">
                 <NavLink tag={Link} className="text-dark" to={logoutPath}>Logout</NavLink>
