@@ -31,24 +31,22 @@ namespace JSProject
             {
                 if (_userManager.CreateAsync(new ApplicationUser { UserName = "Admin" }, "Admin").Result.Succeeded)
                 {
-                    _context.Roles.AddRange(new[]
+                    _context.MyRoles.AddRange(new[]
                     {
-                        new IdentityRole
+                        new MyRole
                         {
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            Name = "Admin"
                         },
-                        new IdentityRole
+                        new MyRole
                         {
-                            Name = "Teacher",
-                            NormalizedName = "TEACHER"
+                            Name = "Teacher"
                         }
                     });
                     _context.SaveChanges();
 
-                    _context.UserRoles.Add(new IdentityUserRole<string>
+                    _context.MyRoleToUsers.Add(new MyRoleToUser
                     {
-                        RoleId = _context.Roles.Where(x => x.Name == "Admin").FirstOrDefault()?.Id ?? "",
+                        MyRoleId = _context.MyRoles.Where(x => x.Name == "Admin").FirstOrDefault()?.Id ?? 0,
                         UserId = _context.ApplicationUsers.Where(x => x.UserName == "Admin").FirstOrDefault()?.Id ?? ""
                     });
                     _context.SaveChanges();

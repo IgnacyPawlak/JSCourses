@@ -24,6 +24,8 @@ namespace JSProject.Data
         public DbSet<CourseMaterialType> CourscMaterialTypes { get; set; }
         public DbSet<CourseMaterialsToCourses> CourseMaterialsToCourses { get; set; }
         public DbSet<CoursesToUsers> CoursesToUsers { get; set; }
+        public DbSet<MyRole> MyRoles { get; set; }
+        public DbSet<MyRoleToUser> MyRoleToUsers{ get; set; }
 
 
 
@@ -70,6 +72,20 @@ namespace JSProject.Data
                 .HasOne<ApplicationUser>(x => x.Teacher)
                 .WithMany(y => y.CoursesTeacher)
                 .HasForeignKey(z => z.TeacherId);
+
+            //////////////////////////////////////// Users many to many MyRole
+            builder.Entity<MyRoleToUser>().HasKey(k => new { k.UserId, k.MyRoleId });
+
+            builder.Entity<MyRoleToUser>()
+                .HasOne<ApplicationUser>(x => x.ApplicationUser)
+                .WithMany(y => y.myRoles)
+                .HasForeignKey(z => z.UserId);
+
+
+            builder.Entity<MyRoleToUser>()
+                .HasOne<MyRole>(x => x.MyRole)
+                .WithMany(y => y.myRoleToUsers)
+                .HasForeignKey(z => z.MyRoleId);
         }
 
     }

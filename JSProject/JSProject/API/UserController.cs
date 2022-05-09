@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace JSProject.API
 {
@@ -47,7 +48,7 @@ namespace JSProject.API
             {
                 Id = buffUser.Id,
                 Name = buffUser.UserName,
-                Role = _userManager.IsInRoleAsync(buffUser, "Admin").Result ? "Admin" : _userManager.IsInRoleAsync(buffUser, "Teacher").Result ? "Teacher" : "Student"
+                Role = buffUser.myRoles.FirstOrDefault() != null ? buffUser.myRoles.FirstOrDefault().MyRole.Name : "Student"
             };
         }
 
@@ -59,7 +60,7 @@ namespace JSProject.API
             {
                 Id = x.Id,
                 Name = x.UserName,
-                Role = _userManager.IsInRoleAsync(x, "Admin").Result ? "Admin" : _userManager.IsInRoleAsync(x, "Teacher").Result ? "Teacher" : "Student"
+                Role = x.myRoles.FirstOrDefault() != null ? x.myRoles.FirstOrDefault().MyRole.Name : "Student"
             });
         }
 
@@ -71,7 +72,7 @@ namespace JSProject.API
             {
                 Id = x.Id,
                 Name = x.UserName,
-                Role = _userManager.IsInRoleAsync(x, "Admin").Result ? "Admin" : _userManager.IsInRoleAsync(x, "Teacher").Result ? "Teacher" : "Student"
+                Role = x.myRoles.FirstOrDefault() != null ? x.myRoles.FirstOrDefault().MyRole.Name : "Student"
             }).FirstOrDefault();
         }
 
@@ -79,12 +80,12 @@ namespace JSProject.API
         [HttpGet]
         public IEnumerable<UserDTO> GetTeacherList()
         {
-            return _context.ApplicationUsers.Where(x => _userManager.IsInRoleAsync(x, "Teacher").Result).Select(x => new UserDTO
+            return _context.ApplicationUsers.Where(x => x.myRoles.Any(y => y.MyRole.Name == "Teacher")).Select(x => new UserDTO
             {
                 Id = x.Id,
                 Name = x.UserName,
                 Role = "Teacher"
-            });
+            }).ToList();
         }
     }
 }
