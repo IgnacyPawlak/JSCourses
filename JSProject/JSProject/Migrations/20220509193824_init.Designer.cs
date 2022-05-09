@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JSProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220505124317_init")]
+    [Migration("20220509193824_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -268,6 +268,36 @@ namespace JSProject.Migrations
                     b.ToTable("CoursesToUsers");
                 });
 
+            modelBuilder.Entity("JSProject.Models.MyRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MyRoles");
+                });
+
+            modelBuilder.Entity("JSProject.Models.MyRoleToUser", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MyRoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "MyRoleId");
+
+                    b.HasIndex("MyRoleId");
+
+                    b.ToTable("MyRoleToUsers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -444,6 +474,21 @@ namespace JSProject.Migrations
 
                     b.HasOne("JSProject.Models.ApplicationUser", "User")
                         .WithMany("Courses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("JSProject.Models.MyRoleToUser", b =>
+                {
+                    b.HasOne("JSProject.Models.MyRole", "MyRole")
+                        .WithMany("myRoleToUsers")
+                        .HasForeignKey("MyRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JSProject.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("myRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
